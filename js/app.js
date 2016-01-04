@@ -1,6 +1,7 @@
-var w = 0, l = 0, s = 0; // wins and losts counters
+var w = 0, s = 0; // wins and stars counters
 var tfl = 30; // time available until time over
 var tl; // timer
+var bscore = 0; // best score
 
 /**
  * @description This functions generates a random number between min and max

@@ -69,7 +69,6 @@ Engine = (function (global) {
          */
         if (tl == 0) {
             win.cancelAnimationFrame(req);
-            reset();
 
             ctx.fillStyle = 'rgba(255, 255, 255, 0.5)';
             ctx.fillRect(0, 0, canvas.width, canvas.height);
@@ -77,6 +76,13 @@ Engine = (function (global) {
             ctx.font = 'bold 64px Impact';
             ctx.fillStyle = 'black';
             ctx.fillText('TIME OVER', canvas.width / 2, canvas.height / 2)
+
+            ctx.font = 'bold 48px Impact';
+
+            if (bscore < w + s) bscore = w + s;
+            ctx.fillText('BEST SCORE: ' + bscore, canvas.width / 2, canvas.height / 2 + 50)
+
+            reset();
 
             document.getElementById('restart').style.display = 'block';
         }
@@ -130,8 +136,8 @@ Engine = (function (global) {
         allEnemies.forEach(function (e) {
             if (player.x > (e.x - fuzzy) && player.x < (e.x + fuzzy)
                 && player.y > (e.y - fuzzy) && player.y < (e.y + fuzzy)) {
-                player.reset();
-                l++;
+                if (bscore < w + s) bscore = w + s;
+                reset();
             }
         });
 
@@ -190,7 +196,7 @@ Engine = (function (global) {
         ctx.textAlign = 'center';
         ctx.font = 'bold 36px Impact';
         ctx.strokeStyle = 'red';
-        ctx.strokeText('WON ' + w + ' LOST ' + l + ' STARS ' + s, canvas.width / 2, 50);
+        ctx.strokeText('WON ' + w + ' STARS ' + s, canvas.width / 2, 50);
 
         ctx.clearRect(0, 600, canvas.width, 80); // clear upper rectangle to avoid overwriting text
         ctx.strokeText('TIME LEFT 0:' + ('0' + tl).slice(-2), canvas.width / 2, 630);
@@ -230,7 +236,6 @@ Engine = (function (global) {
         allStars.length = 0;
         player.reset();
         w = 0;
-        l = 0;
         s = 0;
     }
 
