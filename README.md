@@ -13,5 +13,5 @@ RULES
 -----
 
 To score a win, the boy has to cross the road and reach the water without touching a bug. Collecting stars is a
-bonus. Touching a bug puts you back to the beginning. How many stars can you catch in 30 seconds? How many times can
-you reach the water in 30 seconds?
+bonus. Touching a bug puts you back to the beginning and resets the counters. 
+How many stars can you catch in 30 seconds? How many times can you reach the water in 30 seconds?
