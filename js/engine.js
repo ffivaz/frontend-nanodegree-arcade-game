@@ -71,14 +71,14 @@ Engine = (function (global) {
             win.cancelAnimationFrame(req);
             reset();
 
-            ctx.fillStyle = "rgba(255, 255, 255, 0.5)";
+            ctx.fillStyle = 'rgba(255, 255, 255, 0.5)';
             ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-            ctx.font = "bold 64px Impact";
-            ctx.fillStyle = "black";
-            ctx.fillText("TIME OVER", canvas.width / 2, canvas.height / 2)
+            ctx.font = 'bold 64px Impact';
+            ctx.fillStyle = 'black';
+            ctx.fillText('TIME OVER', canvas.width / 2, canvas.height / 2)
 
-            document.getElementById("restart").style.display = "block";
+            document.getElementById('restart').style.display = 'block';
         }
     }
 
@@ -89,7 +89,7 @@ Engine = (function (global) {
      */
     function init() {
         tl = tfl; // (Re)set timer to maximum time
-        document.getElementById("restart").style.display = "none"; // hide restart button (in case it is not the first game)
+        document.getElementById('restart').style.display = 'none'; // hide restart button (in case it is not the first game)
 
         lastTime = Date.now();
         main();
@@ -187,17 +187,17 @@ Engine = (function (global) {
          * TODO: if time left is bigger than 59 seconds (tfl or tl > 59), then the timer does not work
          */
         ctx.clearRect(0, 0, canvas.width, 80); // clear upper rectangle to avoid overwriting text
-        ctx.textAlign = "center";
-        ctx.font = "bold 36px Impact";
-        ctx.strokeStyle = "red";
-        ctx.strokeText("WON " + w + " LOST " + l + " STARS " + s, canvas.width / 2, 50);
+        ctx.textAlign = 'center';
+        ctx.font = 'bold 36px Impact';
+        ctx.strokeStyle = 'red';
+        ctx.strokeText('WON ' + w + ' LOST ' + l + ' STARS ' + s, canvas.width / 2, 50);
 
         ctx.clearRect(0, 600, canvas.width, 80); // clear upper rectangle to avoid overwriting text
-        ctx.strokeText("TIME LEFT 0:" + ("0" + tl).slice(-2), canvas.width / 2, 630);
+        ctx.strokeText('TIME LEFT 0:' + ('0' + tl).slice(-2), canvas.width / 2, 630);
         if (timer % 60 == 0) {
             tl = tl - 1;
             ctx.clearRect(0, 600, canvas.width, 80); // clear upper rectangle to avoid overwriting text
-            ctx.strokeText("TIME LEFT 0:" + ("0" + tl).slice(-2), canvas.width / 2, 630);
+            ctx.strokeText('TIME LEFT 0:' + ('0' + tl).slice(-2), canvas.width / 2, 630);
         }
 
         renderEntities();
@@ -252,7 +252,7 @@ Engine = (function (global) {
     global.ctx = ctx;
 
     // When restart is clicked, the init function is called (restarts the game).
-    document.getElementById("restart").onclick = function () {
+    document.getElementById('restart').onclick = function () {
         init();
     };
 })(this);

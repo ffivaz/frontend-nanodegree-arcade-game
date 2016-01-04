@@ -70,25 +70,25 @@ Player.prototype.render = function () {
  */
 Player.prototype.handleInput = function (key) {
     switch (key) {
-        case "right":
+        case 'right':
             if (this.x < 4 * 101) {
                 this.x = this.x + 101;
             }
             break;
 
-        case "left":
+        case 'left':
             if (this.x > 0) {
                 this.x = this.x - 101;
             }
             break;
 
-        case "down":
+        case 'down':
             if (this.y < 5 * 75) {
                 this.y = this.y + 83;
             }
             break;
 
-        case "up":
+        case 'up':
             if (this.y > 0) {
                 this.y = this.y - 83;
             }
