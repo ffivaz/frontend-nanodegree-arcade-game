@@ -8,7 +8,7 @@ update after a commit, be patient if you want the latest version.) The game begi
 background images are loaded.
 
 Use up, down, left and right arrows to move the boy. At the end of the time, you can restart the game by clicking
-the RESTART button.
+the AGAIN button.
 
 RULES
 -----
