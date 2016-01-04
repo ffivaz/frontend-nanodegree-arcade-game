@@ -1,3 +1,21 @@
 body {
     text-align: center;
 }
+
+/* Trick for centering from https://css-tricks.com/quick-css-trick-how-to-center-an-object-exactly-in-the-center/ */
+#restart {
+    position: absolute;
+    top: 350px;
+    left: calc(50% - 75px);
+    display: none;
+
+    border: 2px solid black;
+    width: 150px;
+    height: 50px;
+    font-size: 24px;
+    opacity: 0.6;
+}
+
+#restart:hover {
+    opacity: 0.9;
+}

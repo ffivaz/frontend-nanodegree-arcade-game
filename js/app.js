@@ -1,4 +1,6 @@
 var w = 0, l = 0, s = 0; // wins and losts counters
+var tl; // timer
+var tfl = 2; // time available until game over
 
 /**
  * This functions generates a random number between min and max
@@ -148,7 +150,6 @@ var allStars = [];
 [1, 2, 3].forEach(function (i) {
     allStars.push(new Star());
 });
-
 
 // This listens for key presses and sends the keys to Player.handleInput() method.
 document.addEventListener('keyup', function (e) {

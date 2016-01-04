@@ -23,10 +23,12 @@ var Engine = (function (global) {
         win = global.window,
         canvas = doc.createElement('canvas'),
         ctx = canvas.getContext('2d'),
-        lastTime;
+        timer = 0,
+        lastTime,
+        req;
 
     canvas.width = 505;
-    canvas.height = 606;
+    canvas.height = 636;
     doc.body.appendChild(canvas);
 
     /* This function serves as the kickoff point for the game loop itself
@@ -42,6 +44,8 @@ var Engine = (function (global) {
         var now = Date.now(),
             dt = (now - lastTime) / 1000.0;
 
+        timer = timer + 1;
+
         /* Call our update/render functions, pass along the time delta to
          * our update function since it may be used for smooth animation.
          */
@@ -56,7 +60,24 @@ var Engine = (function (global) {
         /* Use the browser's requestAnimationFrame function to call this
          * function again as soon as the browser is able to draw another frame.
          */
-        win.requestAnimationFrame(main);
+        req = win.requestAnimationFrame(main);
+
+        /* This is a bit of a hack. A could not find any other way of
+         * killing requestAnimationFrame.
+         */
+        if (tl == 0) {
+            win.cancelAnimationFrame(req);
+            reset();
+
+            ctx.fillStyle = "rgba(255, 255, 255, 0.5)";
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+            ctx.font = "bold 64px Impact";
+            ctx.fillStyle = "black";
+            ctx.fillText("TIME OVER", canvas.width / 2, canvas.height / 2)
+
+            document.getElementById("restart").style.display = "block";
+        }
     }
 
     /* This function does some initial setup that should only occur once,
@@ -64,6 +85,9 @@ var Engine = (function (global) {
      * game loop.
      */
     function init() {
+        tl = tfl; // (Re)set timer to maximum time
+        document.getElementById("restart").style.display = "none"; // hide restart button (in case it is not the first game)
+        reset();
         lastTime = Date.now();
         main();
     }
@@ -165,6 +189,14 @@ var Engine = (function (global) {
         ctx.strokeStyle = "red";
         ctx.strokeText("WON " + w + " LOST " + l + " STARS " + s, canvas.width / 2, 50);
 
+        ctx.clearRect(0, 600, canvas.width, 80); // clear upper rectangle to avoid overwriting text
+        ctx.strokeText("TIME LEFT 0:0" + tl, canvas.width / 2, 630);
+        if (timer % 60 == 0) {
+            tl = tl - 1;
+            ctx.clearRect(0, 600, canvas.width, 80); // clear upper rectangle to avoid overwriting text
+            ctx.strokeText("TIME LEFT 0:0" + tl, canvas.width / 2, 630);
+        }
+
         renderEntities();
     }
 
@@ -193,7 +225,9 @@ var Engine = (function (global) {
      * those sorts of things. It's only called once by the init() method.
      */
     function reset() {
-
+        allEnemies.length = 0;
+        allStars.length = 0;
+        player.reset();
     }
 
     /* Go ahead and load all of the images we know we're going to need to
@@ -215,4 +249,8 @@ var Engine = (function (global) {
      * from within their app.js files.
      */
     global.ctx = ctx;
+
+    document.getElementById("restart").onclick = function () {
+        init();
+    };
 })(this);
