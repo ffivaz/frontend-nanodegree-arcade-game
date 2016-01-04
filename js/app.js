@@ -1,7 +1,10 @@
-var w = 0, l = 0, s = 0; // wins and losts counters
+var w = 0, s = 0; // wins and stars counters
+var tfl = 30; // time available until time over
+var tl; // timer
+var bscore = 0; // best score
 
 /**
- * This functions generates a random number between min and max
+ * @description This functions generates a random number between min and max
  * @param {number} min
  * @param {number} max
  * @returns {number} A random integer between min (included) and max (not included)
@@ -11,15 +14,13 @@ function getRandomNumber(min, max) {
 }
 
 /**
- * @description This function initiates a object of class Enemy
+ * @description This function initiates a object of class Enemy. This class has no parameter, but some members.
  * @constructor
- *
- * This class has no parameter, but some methods :
- * @method {string} sprite - The image of the enemy
- * @method {number} x - x-position of image (initially set to first column)
- * @method {number} y - y-position of image (initially randomly set to 2nd, 3rd or 4th row)
- * @method {number} speed - speed of enemy (pixels per frame)
- * @method {number} maxSpeed - maximum speed of enemy (initially set to 200 pixels per frame)
+ * @member {string} sprite - The image of the enemy
+ * @member {number} x - x-position of image (initially set to first column)
+ * @member {number} y - y-position of image (initially randomly set to 2nd, 3rd or 4th row)
+ * @member {number} speed - speed of enemy (pixels per frame)
+ * @member {number} maxSpeed - maximum speed of enemy (initially set to 200 pixels per frame)
  */
 var Enemy = function () {
     this.sprite = 'images/enemy-bug.png';
@@ -30,7 +31,7 @@ var Enemy = function () {
 };
 
 /**
- * @description updates the Enemy, i.e. moves the enemy to the right of the board at given speed
+ * @description Method updates the Enemy, i.e. moves the enemy to the right of the board at given speed
  * @param dt a time delta between ticks, ensures speed is consistent across different computers
  */
 Enemy.prototype.update = function (dt) {
@@ -38,20 +39,18 @@ Enemy.prototype.update = function (dt) {
 };
 
 /**
- * @description Renders the enemy, uses resources.js and Resources loaded by engine.js
+ * @description Method renders the enemy, uses resources.js and Resources loaded by engine.js
  */
 Enemy.prototype.render = function () {
     ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
 };
 
 /**
- * @description This function initiates a object of class Player
+ * @description This function initiates a object of class Player. This class has no parameter, but some members.
  * @constructor
- *
- * This class has no parameter, but some methods :
- * @method {string} sprite - The image of the enemy
- * @method {number} x - x-position of image (initially set to 3rd (middle) column)
- * @method {number} y - y-position of image (initially set to 5th (bottom) row)
+ * @member {string} sprite - The image of the enemy
+ * @member {number} x - x-position of image (initially set to 3rd (middle) column)
+ * @member {number} y - y-position of image (initially set to 5th (bottom) row)
  */
 var Player = function () {
     this.sprite = 'images/char-boy.png';
@@ -60,50 +59,37 @@ var Player = function () {
 };
 
 /**
- * @description Updates the player when it reaches the water. Increments wins, calls player.reset() function (see above)
- *
- * note that collisions with enemies and stars are handled by checkCollisions() in engine.js
- */
-Player.prototype.update = function () {
-    // If you reach the water, you win. And it counts!
-    if (this.y == -40) {
-        w++;
-        this.reset();
-    }
-};
-
-/**
- * @description Renders the player, uses resources.js and Resources loaded by engine.js
+ * @description Method renders the player, uses resources.js and Resources loaded by engine.js
  */
 Player.prototype.render = function () {
     ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
 };
 
 /**
- * @description Handles input by the user and moves the player accordingly
+ * @description Method handles input by the user and moves the player accordingly
  * @param {string} key - keycode 'left', 'up', 'right' or 'down'
  */
 Player.prototype.handleInput = function (key) {
     switch (key) {
-        case "right":
+        case 'right':
             if (this.x < 4 * 101) {
                 this.x = this.x + 101;
             }
             break;
 
-        case "left":
+        case 'left':
             if (this.x > 0) {
                 this.x = this.x - 101;
             }
             break;
 
-        case "down":
+        case 'down':
             if (this.y < 5 * 75) {
                 this.y = this.y + 83;
             }
             break;
 
-        case "up":
+        case 'up':
             if (this.y > 0) {
                 this.y = this.y - 83;
             }
@@ -111,11 +97,12 @@ Player.prototype.handleInput = function (key) {
     }
 };
 
+/**
+ * @description Method resets the Player (and draws new stars)
+ */
 Player.prototype.reset = function () {
     this.x = 2 * 101;
     this.y = 5 * 75;
-
-    allEnemies.length = 0;
 
     allStars.length = 0;
     [1, 2, 3].forEach(function (i) {
@@ -123,32 +110,41 @@ Player.prototype.reset = function () {
     });
 };
 
+/**
+ * @description This function initiates a object of class Star. This class has no parameter, but some members.
+ * @constructor
+ * @member {string} sprite - The image of the star
+ * @member {number} x - x-position of image (randomly set to any column)
+ * @member {number} y - y-position of image (randomly set to 2nd, 3rd or 4th row)
+ */
 var Star = function () {
     this.sprite = 'images/Star.png';
-
     this.x = getRandomNumber(0, 4) * 101;
     this.y = 75 + getRandomNumber(0, 3) * 83;
 };
 
+/**
+ * @description Method renders the star, uses resources.js and Resources loaded by engine.js
+ */
 Star.prototype.render = function () {
     ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
 };
 
-// creates an array for storing enemies
-// Randomly creates new enemies every 500 to 1000 milliseconds. Enemies are added to the above created array.
+/* creates an array for storing stars and creates three stars
+ * TODO: It could be interesting to have more - or less - stars
+ */
+var allStars = [];
+[1, 2, 3].forEach(function (i) {
+    allStars.push(new Star());
+});
+
+// Randomly creates new enemies every 750 to 1000 milliseconds. Enemies are added to the above created array.
 var allEnemies = [];
 setInterval(function () {
     allEnemies.push(new Enemy());
 }, getRandomNumber(750, 1000));
 
 var player = new Player(); // Creates a new player object
-
-var allStars = [];
-
-[1, 2, 3].forEach(function (i) {
-    allStars.push(new Star());
-});
-
 
 // This listens for key presses and sends the keys to Player.handleInput() method.
 document.addEventListener('keyup', function (e) {

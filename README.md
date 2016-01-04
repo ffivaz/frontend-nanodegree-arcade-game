@@ -1,6 +1,23 @@
-frontend-nanodegree-arcade-game
-===============================
+frontend-nanodegree-arcade-game README
+======================================
 
-Students should use this [rubric](https://www.udacity.com/course/viewer/#!/c-nd001/l-2696458597/m-2687128535) for self-checking their submission.
+RUN
+---
+To run the game, visit http://fabienfivaz.ch/frontend-nanodegree-arcade-game/ (github pages take some time to 
+update after a commit, be patient if you want the latest version.) The game begins as soon as all 
+background images are loaded.
 
-For detailed instructions on how to get started, check out this [guide](https://docs.google.com/document/d/1v01aScPjSWCCWQLIpFqvg3-vXLH2e8_SZQKC8jNO0Dc/pub?embedded=true).
+Use up, down, left and right arrows to move the boy. At the end of the time, you can restart the game by clicking
+the AGAIN button.
+
+RULES
+-----
+
+To score a win, the boy has to cross the road and reach the water without touching a bug. Collecting stars is a
+bonus. Touching a bug puts you back to the beginning and resets the counters. 
+How many stars can you catch in 30 seconds? How many times can you reach the water in 30 seconds?
+
+Final (best) score equals number of wins plus number of collected stars.
+
+ENJOY!
+------
