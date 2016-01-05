@@ -75,12 +75,12 @@ Engine = (function (global) {
 
             ctx.font = 'bold 64px Impact';
             ctx.fillStyle = 'black';
-            ctx.fillText('TIME OVER', canvas.width / 2, canvas.height / 2)
+            ctx.fillText('TIME OVER', canvas.width / 2, canvas.height / 2);
 
             ctx.font = 'bold 48px Impact';
 
             if (bscore < w + s) bscore = w + s;
-            ctx.fillText('BEST SCORE: ' + bscore, canvas.width / 2, canvas.height / 2 + 50)
+            ctx.fillText('BEST SCORE: ' + bscore, canvas.width / 2, canvas.height / 2 + 50);
 
             reset();
 
@@ -124,7 +124,7 @@ Engine = (function (global) {
     }
 
     /**
-     * @description Checks if the player collides with a bug, or colects a star, or reaches the water.
+     * @description Checks if the player collides with a bug, or collects a star, or reaches the water.
      */
     function checkCollisions() {
         /* this sets the precision around the player.
@@ -149,7 +149,7 @@ Engine = (function (global) {
                 e.x = -100;
                 e.y = -100;
             }
-        })
+        });
 
         // If you reach the water, you win. And it counts!
         if (player.y == -40) {
